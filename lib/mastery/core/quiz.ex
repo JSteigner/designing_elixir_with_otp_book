@@ -59,9 +59,7 @@ defmodule Mastery.Core.Quiz do
     |> reset_used()
   end
 
-  defp save_response(quiz, response) do
-    Map.put(quiz, :last_response, response)
-  end
+  defp save_response(quiz, response), do: Map.put(quiz, :last_response, response)
 
   defp mastered?(quiz) do
     score = Map.get(quiz.record, template(quiz).name, 0)
@@ -136,12 +134,10 @@ defmodule Mastery.Core.Quiz do
        when map_size(templates) == 0 do
     %__MODULE__{
       quiz
-      | templates: Enum.group_by(used, fn template -> template.category end)
+      | templates: Enum.group_by(used, fn template -> template.category end),
+        used: []
     }
   end
 
   defp reset_template_cycle(quiz), do: quiz
 end
-
-# quiz = Quiz.new(title: "Addition", master: 2)
-# Quiz.add_template(quiz, name: :single_digit_addition, category: :addition, instructions: "Add the numbers", raw: "<%= @left %> + <%= @right %>", generators: generator, checker: checker)
