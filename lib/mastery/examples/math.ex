@@ -18,6 +18,8 @@ defmodule Mastery.Examples.Math do
     ]
   end
 
+  def quiz_fields(), do: %{mastery: 2, title: :simple_addition}
+
   defp addition_checker(substitutions, answer) do
     left = Keyword.fetch!(substitutions, :left)
     right = Keyword.fetch!(substitutions, :right)
@@ -25,6 +27,4 @@ defmodule Mastery.Examples.Math do
   end
 
   defp addition_generators(), do: %{left: Enum.to_list(0..9), right: Enum.to_list(0..9)}
-
-  defp quiz_fields(), do: %{mastery: 2, title: :simple_addition}
 end
