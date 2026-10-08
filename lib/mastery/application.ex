@@ -2,7 +2,6 @@ defmodule Mastery.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-
   use Application
 
   @impl true
@@ -10,6 +9,7 @@ defmodule Mastery.Application do
     children = [
       # Starts a worker by calling: Mastery.Worker.start_link(arg)
       # {Mastery.Worker, arg}
+      {Mastery.Boundary.QuizManager, [name: Mastery.Boundary.QuizManager]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
