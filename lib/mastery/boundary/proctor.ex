@@ -9,7 +9,7 @@ defmodule Mastery.Boundary.Proctor do
 
   def init(quizzes), do: {:ok, quizzes}
 
-  def schedule(proctor \\ __MODULE__, quiz, temps, start_at, end_at) do
+  def schedule_quiz(proctor \\ __MODULE__, quiz, temps, start_at, end_at) do
     quiz = %{fields: quiz, templates: temps, start_at: start_at, end_at: end_at}
 
     GenServer.call(proctor, {:schedule_quiz, quiz})
@@ -44,7 +44,7 @@ defmodule Mastery.Boundary.Proctor do
     QuizManager.remove_quiz(title)
 
     title
-    |> QuizSession.active_session_for()
+    |> QuizSession.active_sessions_for()
     |> QuizSession.end_sessions()
 
     Logger.info("Stopped quiz #{title}")
@@ -77,5 +77,5 @@ defmodule Mastery.Boundary.Proctor do
     not_ready
   end
 
-  defp date_time_less_than_or_equal?(a, b), do: DateTime.compare(a, b) in ~w[lt eq]
+  defp date_time_less_than_or_equal?(a, b), do: DateTime.compare(a, b) in ~w[lt eq]a
 end
