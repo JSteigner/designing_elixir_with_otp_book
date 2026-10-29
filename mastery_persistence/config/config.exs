@@ -1,7 +1,7 @@
-use Mix.Config
+import Config
 
 config :mastery_persistence, ecto_repos: [MasteryPersistence.Repo]
 
 config :logger, level: :info
 
-import_config "#{Mix.env().exs}"
+import_config "#{config_env()}.exs"

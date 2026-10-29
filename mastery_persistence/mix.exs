@@ -3,7 +3,7 @@ defmodule MasteryPersistence.MixProject do
 
   def project do
     [
-      app: :mastery_persistance,
+      app: :mastery_persistence,
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,

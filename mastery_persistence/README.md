@@ -10,7 +10,7 @@ by adding `mastery_persistance` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:mastery_persistance, "~> 0.1.0"}
+    {:mastery_persistence, "~> 0.1.0"}
   ]
 end
 ```
