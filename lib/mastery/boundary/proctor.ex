@@ -59,13 +59,14 @@ defmodule Mastery.Boundary.Proctor do
     |> maybe_append_timeout(quizzes, now)
   end
 
-  defp append_state(tuple, quizzes), do: Tuple.append(tuple, quizzes)
+  defp append_state({:noreply} = tuple, quizzes), do: Tuple.insert_at(tuple, 1, quizzes)
+  defp append_state({:reply, :ok} = tuple, quizzes), do: Tuple.insert_at(tuple, 2, quizzes)
 
   defp maybe_append_timeout(tuple, [], _now), do: tuple
 
   defp maybe_append_timeout(tuple, [%{start_at: start_at} | _quizzes], now) do
     timeout = DateTime.diff(now, start_at)
-    Tuple.append(tuple, timeout)
+    Tuple.insert_at(tuple, 3, timeout)
   end
 
   defp start_quizzes(quizzes, now) do
