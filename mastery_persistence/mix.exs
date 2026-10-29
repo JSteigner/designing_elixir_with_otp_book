@@ -1,4 +1,4 @@
-defmodule MasteryPersistance.MixProject do
+defmodule MasteryPersistence.MixProject do
   use Mix.Project
 
   def project do
@@ -15,7 +15,7 @@ defmodule MasteryPersistance.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {MasteryPersistance.Application, []}
+      mod: {MasteryPersistence.Application, []}
     ]
   end
 

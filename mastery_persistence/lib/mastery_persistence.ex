@@ -1,6 +1,6 @@
-defmodule MasteryPersistance do
+defmodule MasteryPersistence do
   @moduledoc """
-  Documentation for `MasteryPersistance`.
+  Documentation for `MasteryPersistence`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule MasteryPersistance do
 
   ## Examples
 
-      iex> MasteryPersistance.hello()
+      iex> MasteryPersistence.hello()
       :world
 
   """
