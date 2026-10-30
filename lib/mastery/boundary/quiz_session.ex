@@ -23,7 +23,9 @@ defmodule Mastery.Boundary.QuizSession do
 
   def select_question(name), do: GenServer.call(via(name), :select_question)
 
-  def answer_question(name, answer), do: GenServer.call(via(name), {:answer_question, answer})
+  def answer_question(name, answer, persistence_fn) do
+    GenServer.call(via(name), {:answer_question, answer, persistence_fn})
+  end
 
   def handle_call(:select_question, _from, {quiz, email}) do
     quiz = Quiz.select_question(quiz)
@@ -31,10 +33,15 @@ defmodule Mastery.Boundary.QuizSession do
     {:reply, quiz.current_question.asked, {quiz, email}}
   end
 
-  def handle_call({:answer_question, answer}, _from, {quiz, email}) do
-    quiz
-    |> Quiz.answer_question(Response.new(quiz, email, answer))
-    |> Quiz.select_question()
+  def handle_call({:answer_question, answer, fun}, _from, {quiz, email}) do
+    fun = fun || fn r, f -> f.(r) end
+    response = Response.new(quiz, email, answer)
+
+    fun.(response, fn r ->
+      quiz
+      |> Quiz.answer_question(r)
+      |> Quiz.select_question()
+    end)
     |> maybe_finish(email)
   end
 
@@ -58,8 +65,9 @@ defmodule Mastery.Boundary.QuizSession do
 
   defp maybe_finish(nil, _email), do: {:stop, :normal, :finished, nil}
 
-  defp maybe_finish(quiz, email),
-    do: {:reply, {quiz.current_question.asked, quiz.last_response.correct}, {quiz, email}}
+  defp maybe_finish(quiz, email) do
+    {:reply, {quiz.current_question.asked, quiz.last_response.correct}, {quiz, email}}
+  end
 
   defp via({_title, _email} = name) do
     {:via, Registry, {Mastery.Registry.QuizSession, name}}

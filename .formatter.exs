@@ -15,7 +15,11 @@
     has_many: 2,
     has_three: 3,
     timestamps: 0,
-    timestamps: 1
+    timestamps: 1,
+    assert: 1,
+    assert: 2,
+    refute: 1,
+    refute: 2
   ],
   # Export them so other applications importing your project honor this style
   export: [
@@ -27,7 +31,8 @@
       has_many: 2,
       has_three: 3,
       timestamps: 0,
-      timestamps: 1
+      timestamps: 1,
+      assert: 1
     ]
   ]
 ]
